@@ -1,54 +1,91 @@
-# React + TypeScript + Vite
+# 🌍 Earthquake Data Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive React + TypeScript dashboard that visualizes live earthquake data from USGS through an interactive scatter chart and a dynamic data table.
 
-Currently, two official plugins are available:
+![screenshot](./screenshot.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 📌 Project Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This single-page application (SPA) provides a side-by-side interface:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **📊 Chart Panel** (left): Interactive scatter plot using Recharts. Users can select which variables to display on the X and Y axes.
+- **📋 Data Table** (right): Scrollable table with full earthquake data and row highlighting.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The chart and table are interconnected—hovering/selecting one updates the other, showing seamless state sharing.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 🚀 Tech Stack
+
+| Category        | Tools Used                          |
+|----------------|--------------------------------------|
+| Frontend | `React`, `TypeScript` `Vite` |
+| Styling  | `Tailwind CSS`               |
+| Charts   | `Recharts`                   |
+| State Sharing | `Props`, `React Context`,`Zustand` (optional integration) |
+| Data Parsing|`PapaParse` |
+| Dataset  | USGS Earthquake Data (CSV)      |
+
+---
+
+## 📦 Features
+
+- ✅ Fully responsive layout with two main panels
+- ✅ Earthquake data fetched and parsed from a CSV file (`all_month.csv`)
+- ✅ Dropdowns to switch X/Y axis for dynamic chart exploration
+- ✅ Hover and selection syncing between table and chart
+- ✅ Clean, gradient-enhanced design for a modern feel
+- ✅ Type-safe data handling with TypeScript interfaces
+
+---
+
+## 📁 Project Setup
+
+### 1. Clone the repository
+
+git clone https://github.com/nupur13-star/earthquake_dashboard.git
+cd earthquake_dashboard
+install dependencies by npm install
+
+## 3. Place the Data File
+Download the USGS earthquake data file and place it in the public folder:
+
+File name: all_month.csv
+
+Download link: USGS - All Month CSV
+
+4. Start the development server
+bash
+Copy code
+npm run dev
+Open http://localhost:5173 to view it in the browser.
+
+AI Usage
+During development, GitHub Copilot and ChatGPT were used to:
+
+Set up TypeScript interfaces for the parsed CSV
+
+Create reusable state handling logic via hooks
+FOLDER STRUCTURE 
+src/
+├── assets/                  # Logos and images
+├── components/              # ChartPanel, DataTable
+├── context/                 # SelectionProvider & custom hook
+├── types/                   # EarthquakeEntry interface
+├── utils/                   # PapaParse CSV loader
+├── App.tsx
+├── index.css
+└── main.tsx
+
+STATE MANAGEMENT 
+Props Pattern: Used to pass data and handlers from parent to Chart and Table.
+
+React Context: Used to sync selection state between Chart and Table.
+
+Zustand: (Optional) easily integratable for scalable global state
+
+AUTHOR 
+NUPUR PATEL
+https://github.com/nupur13-star

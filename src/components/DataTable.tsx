@@ -1,5 +1,5 @@
-import type { EarthquakeEntry } from "../types/earthquake";
 import { useEffect, useRef } from "react";
+import type { EarthquakeEntry } from "../types/earthquake";
 import useSelection from "../context/useSelection";
 import { formatDate } from "../utils/ParseCSV";
 
@@ -11,7 +11,7 @@ function DataTable({ data }: Props) {
   const { selectedId, setSelectedId } = useSelection();
   const tableRef = useRef<HTMLTableElement>(null);
 
-  // Scroll to selected row
+  // Scroll the selected row into view smoothly when selectedId changes
   useEffect(() => {
     if (!selectedId || !tableRef.current) return;
     const row = tableRef.current.querySelector(`[data-id="${selectedId}"]`);
@@ -24,20 +24,24 @@ function DataTable({ data }: Props) {
   }, [selectedId]);
 
   return (
-    <div className="mt-2">
-      <h2 className="text-2xl font-semibold mb-4">📋 Earthquake Table</h2>
+    <div className="mt-4">
+      {/* Table Title */}
+      <h2 className="text-2xl font-bold text-navy-800 mb-4">
+        📋 Earthquake Records
+      </h2>
 
-      <div className="overflow-auto max-h-[450px] border rounded shadow-inner">
+      {/* Scrollable Table Container */}
+      <div className="overflow-auto max-h-[450px] border border-navy-200 rounded-md shadow-md">
         <table
-          className="min-w-full text-sm border-collapse"
           ref={tableRef}
+          className="min-w-full text-sm border-collapse font-medium"
         >
-          <thead className="bg-indigo-100 sticky top-0 z-10 text-indigo-700">
+          <thead className="bg-navy-800 text-white sticky top-0 z-10">
             <tr>
-              <th className="border px-2 py-1">Time</th>
-              <th className="border px-2 py-1">Magnitude</th>
-              <th className="border px-2 py-1">Depth (km)</th>
-              <th className="border px-2 py-1">Location</th>
+              <th className="border px-3 py-2">Time</th>
+              <th className="border px-3 py-2">Magnitude</th>
+              <th className="border px-3 py-2">Depth (km)</th>
+              <th className="border px-3 py-2">Location</th>
             </tr>
           </thead>
           <tbody>
@@ -45,17 +49,17 @@ function DataTable({ data }: Props) {
               <tr
                 key={entry.id}
                 data-id={entry.id}
-                className={`cursor-pointer ${
+                className={`transition-colors cursor-pointer ${
                   entry.id === selectedId
-                    ? "bg-purple-100 font-semibold"
-                    : "hover:bg-blue-50"
+                    ? "bg-navy-100 text-navy-900 font-semibold"
+                    : "hover:bg-navy-50"
                 }`}
                 onClick={() => setSelectedId(entry.id)}
               >
-                <td className="border px-2 py-1">{formatDate(entry.time)}</td>
-                <td className="border px-2 py-1">{entry.mag.toFixed(1)}</td>
-                <td className="border px-2 py-1">{entry.depth.toFixed(1)}</td>
-                <td className="border px-2 py-1">{entry.place}</td>
+                <td className="border px-3 py-2">{formatDate(entry.time)}</td>
+                <td className="border px-3 py-2">{entry.mag.toFixed(1)}</td>
+                <td className="border px-3 py-2">{entry.depth.toFixed(1)}</td>
+                <td className="border px-3 py-2">{entry.place}</td>
               </tr>
             ))}
           </tbody>
@@ -66,5 +70,3 @@ function DataTable({ data }: Props) {
 }
 
 export default DataTable;
-// This component renders a scrollable table of earthquake data with selectable rows.
-// It highlights the selected row and scrolls to it when changed.

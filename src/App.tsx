@@ -1,5 +1,7 @@
+// src/App.tsx
+
 import { useEffect, useState } from 'react';
-import './index.css';
+import './index.css'; // Tailwind & global styles
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 
@@ -16,42 +18,44 @@ function App() {
   const [data, setData] = useState<EarthquakeEntry[]>([]);
 
   useEffect(() => {
+    // Fetch and parse earthquake data on component mount
     fetchEarthquakeData()
       .then((parsed) => setData(parsed))
       .catch((err) => console.error('Failed to fetch data:', err));
   }, []);
 
   return (
-    <SelectionProvider>
-      <div className="min-h-screen w-screen flex flex-col bg-gradient-to-br from-blue-50 via-purple-100 to-pink-100">
-        {/* Header */}
-        <header className="bg-indigo-800 text-white py-4 px-6 shadow-md flex flex-col md:flex-row items-center justify-between">
-          <div className="flex items-center gap-4 mb-2 md:mb-0">
+    // Root container with a navy blue gradient background
+    <div className="min-h-screen w-screen flex flex-col bg-gradient-to-br from-slate-900 via-blue-950 to-slate-800">
+      <SelectionProvider>
+        {/* Header Section */}
+        <header className="bg-gradient-to-r from-blue-950 via-slate-900 to-blue-900 text-white py-5 px-6 shadow-xl flex items-center justify-between">
+          <div className="flex items-center gap-4">
             <img src={viteLogo} className="w-10 animate-bounce" alt="Vite logo" />
             <img src={reactLogo} className="w-10 animate-pulse" alt="React logo" />
-            <h1 className="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-400">
-              Earthquake Dashboard 🌍
+            <h1 className="text-3xl font-extrabold ml-4 text-white">
+              Earthquake Data Dashboard 🌍
             </h1>
           </div>
-          <p className="text-sm text-gray-200">
-            Total Entries: <strong>{data.length}</strong>
+          <p className="text-sm text-gray-200 font-medium">
+            Total Earthquakes: <span className="text-cyan-200 font-bold">{data.length}</span>
           </p>
         </header>
 
-        {/* Main Content */}
-        <main className="flex flex-col md:flex-row flex-1 overflow-hidden gap-4 p-4">
+        {/* Main Content: Chart and Data Table Panels */}
+        <main className="flex flex-1 overflow-hidden">
           {/* Left Panel: Chart */}
-          <section className="md:w-1/2 w-full h-full bg-white rounded-lg shadow-md overflow-auto">
+          <section className="w-1/2 overflow-auto border-r border-slate-700 p-4 bg-slate-900 shadow-md text-white">
             <ChartPanel data={data} />
           </section>
 
-          {/* Right Panel: Table */}
-          <section className="md:w-1/2 w-full h-full bg-white rounded-lg shadow-md overflow-auto">
+          {/* Right Panel: Data Table */}
+          <section className="w-1/2 overflow-auto p-4 bg-slate-800 text-white shadow-md">
             <DataTable data={data} />
           </section>
         </main>
-      </div>
-    </SelectionProvider>
+      </SelectionProvider>
+    </div>
   );
 }
 
